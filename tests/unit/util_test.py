@@ -12,3 +12,4 @@ class UtilTests(unittest.TestCase):
         result = get_daily_averages(
             [('2016-01-01', 800), ('2016-01-01', 700), ('2016-01-01', 700), ('2016-01-01', 1000)])
         self.assertListEqual([('2016-01-01', 800)], result)
+        self.assertIsInstance(result[0][1], int)
