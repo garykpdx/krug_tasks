@@ -20,8 +20,21 @@ class RecordsIntegrationTests(unittest.TestCase):
         results = self.da.get_ports_from_regions(['finland_main'])
         self.assertListEqual(['FIHEL', 'FIKTK', 'FIRAU'], results)
 
+    def test_can_get_ports_from_regions2(self):
+        results = self.da.get_ports_from_regions(['north_europe_main', 'uk_main'])
+        self.assertListEqual(['NLRTM', 'BEZEE', 'FRLEH', 'DEBRV', 'BEANR', 'GBFXT', 'GBSOU', 'DEHAM'], results)
+
     def test_get_prices(self):
         orig_ports = ['CNDAL']
         dest_ports = ['NOHAU']
-        result = self.da.get_prices(orig_ports, dest_ports)
-        self.assertListEqual([(date(2016, 1, 1), 1383), (date(2016, 1, 2), 1383)], result)
+        date_from = date(2016, 1, 1)
+        date_to = date(2016, 1, 2)
+        result = self.da.get_prices(orig_ports, dest_ports, date_from, date_to)
+        print(result)
+        self.assertListEqual([('2016-01-01', 1383), ('2016-01-02', 1383)], result)
+
+    def test_get_results(self):
+        origin, dest = 'CNDAL', 'NOHAU'
+        date_from, date_to = date(2016, 1, 1), date(2016, 1, 31)
+        results = self.da.get_results(origin, dest, date_from, date_to)
+        self.assertListEqual([(date(2016, 1, 1), None),(date(2016, 1, 2), None)], results, 'should be null both days')
