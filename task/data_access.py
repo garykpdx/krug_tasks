@@ -1,5 +1,7 @@
 import psycopg2
+from psycopg2 import sql
 
+HOST_NAME = "localhost"
 DB_PORT = 5433
 
 
@@ -11,7 +13,7 @@ class DataAccess:
     @staticmethod
     def get_connection():
         return psycopg2.connect(
-            host="localhost",
+            host=HOST_NAME,
             port=DB_PORT,
             database="postgres",
             user="postgres",
@@ -21,7 +23,7 @@ class DataAccess:
     def get_version(self):
         cursor = self.con.cursor()
         cursor.execute('SELECT version() limit 1')
-        result = cursor.fetchone()
+        result, = cursor.fetchone()
         return {'version': result}
 
     def get_all_subregions(self, region):
@@ -45,10 +47,16 @@ class DataAccess:
         cursor.execute("SELECT code FROM ports WHERE parent_slug in (%s)", regions)
         return [value[0] for value in cursor.fetchall()]
 
+    def get_prices(self, orig_ports, dest_ports):
+        cursor = self.con.cursor()
+        cursor.execute("SELECT day, price FROM prices WHERE orig_code in (%s) and dest_code in (%s)",
+                       (tuple(orig_ports), tuple(dest_ports)))
+        return cursor.fetchall()
+
     def get_results(self, origin, destination, date_from, date_to):
         cursor = self.con.cursor()
         cursor.execute('SELECT count(*) from ports')
-        result = cursor.fetchone()
+        result, = cursor.fetchone()
         return {'count': result}
 
     def close(self):
