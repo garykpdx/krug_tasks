@@ -9,5 +9,5 @@ def get_daily_averages(prices):
         if daily_counts[day] < 3:
             daily_prices[day] = None
         else:
-            daily_prices[day] = daily_prices[day] / daily_counts[day]
+            daily_prices[day] = int(daily_prices[day] / daily_counts[day])
     return list(daily_prices.items())
