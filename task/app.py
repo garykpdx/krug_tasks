@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from flask import Flask
 from flask import request
 
@@ -8,10 +10,11 @@ app = Flask(__name__)
 
 @app.route('/rates', methods=['GET'])
 def get_average_rate():
-    date_from = request.args.get('date_from')
-    date_to = request.args.get('date_to')
+    date_from = datetime.strptime(request.args.get('date_from'), "%Y-%m-%d").date()
+    date_to = datetime.strptime(request.args.get('date_to'), "%Y-%m-%d").date()
     origin = request.args.get('origin')
     destination = request.args.get('destination')
+
     data = DataAccess()
     results = data.get_results(origin, destination, date_from, date_to)
     return results
