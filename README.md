@@ -1,5 +1,6 @@
 
 # Initial setup
+## Setting up Docker
 The database is contained in a docker instance. Start by building the container. 
 The API code can be run locally without a container.
 
@@ -23,8 +24,14 @@ PGPASSWORD=ratestask psql -h 127.0.0.1 -U postgres
 ```bash
 docker exec -e PGPASSWORD=ratestask -it ratestask psql -U postgres
 ```
+## Using Python
 
 Add a virtual environment or use a native Python 3.10 version or greater.
+
+Install the requirements with
+```shell
+pip install -r requrements.txt
+```
 
 # API endpoints
 There are two endpoints:
