@@ -24,6 +24,8 @@ PGPASSWORD=ratestask psql -h 127.0.0.1 -U postgres
 docker exec -e PGPASSWORD=ratestask -it ratestask psql -U postgres
 ```
 
+Add a virtual environment or use a native Python 3.10 version or greater.
+
 # API endpoints
 There are two endpoints:
 * rates
@@ -43,3 +45,15 @@ The parameters are:
 
 The database has not been modified. The design could be improved by including
 surrogate keys in the `regions` table so that the full slug name is not required in the `ports` table.
+
+##The _status_ endpoint
+This will return if the service is up and running. If the database is connected, it will also return the database version, otherwise it will show the version as null.
+
+```json
+{
+  "database": {
+    "version": "PostgreSQL 12.13 (Debian 12.13-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit"
+  },
+  "status": "running"
+}
+```
