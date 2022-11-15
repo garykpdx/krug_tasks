@@ -1,10 +1,12 @@
+
+
 from datetime import date, datetime
 
 from flask import Flask
 from flask import abort
 from flask import request
 
-from task.data_access import DataAccess
+from data_access import DataAccess
 
 app = Flask(__name__)
 
@@ -24,6 +26,7 @@ def get_average_rate():
         abort(400)
 
     data = DataAccess()
+    # noinspection PyUnboundLocalVariable
     results = data.get_results(origin, destination, date_from, date_to)
     return results
 
