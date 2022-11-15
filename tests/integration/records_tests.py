@@ -20,6 +20,10 @@ class RecordsIntegrationTests(unittest.TestCase):
         results = self.da.get_ports_from_regions(['finland_main'])
         self.assertListEqual(['FIHEL', 'FIKTK', 'FIRAU'], results)
 
+    def test_get_ports_from_regions_with_bad_regions(self):
+        results = self.da.get_ports_from_regions(['does_not_exist'])
+        self.assertListEqual([], results)
+
     def test_can_get_ports_from_regions2(self):
         results = self.da.get_ports_from_regions(['north_europe_main', 'uk_main'])
         self.assertListEqual(['NLRTM', 'BEZEE', 'FRLEH', 'DEBRV', 'BEANR', 'GBFXT', 'GBSOU', 'DEHAM'], results)
