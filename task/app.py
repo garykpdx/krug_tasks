@@ -19,7 +19,7 @@ def get_average_rate():
 
     origin = request.args.get('origin')
     destination = request.args.get('destination')
-    
+
     if not origin or not destination:
         abort(400)
 

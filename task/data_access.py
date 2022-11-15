@@ -59,11 +59,14 @@ class DataAccess:
 
     def get_prices(self, orig_ports: list, dest_ports: list, date_from: date, date_to: date) -> list:
         cursor = self.con.cursor()
+        # TODO: parameterize queries that contain 'IN' clauses
         orig_ports_list = "({})".format(','.join(["'%s'" % p for p in orig_ports]))
         dest_ports_list = "({})".format(','.join(["'%s'" % p for p in dest_ports]))
         cursor.execute(f"SELECT day, price FROM prices WHERE orig_code in"
                        f" {orig_ports_list} and dest_code in {dest_ports_list} "
                        "and day >= %s and day <= %s", (date_from, date_to))
+
+        # convert date objects to string for output
         return [(day.strftime('%Y-%m-%d'), price) for day, price in cursor.fetchall()]
 
     def get_results(self, origin: str, dest: str, date_from: date, date_to: date) -> list:
