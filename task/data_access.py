@@ -2,7 +2,7 @@ from datetime import date
 
 import psycopg2
 
-from task.utils import get_daily_averages
+from utils import get_daily_averages
 
 HOST_NAME = "localhost"
 DB_PORT = 5433
