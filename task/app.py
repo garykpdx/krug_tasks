@@ -30,9 +30,12 @@ def get_average_rate():
 
 @app.route('/status', methods=['GET', 'POST'])
 def get_status():
-    data = DataAccess()
-    version = data.get_version()
-    return {'status': 'running', 'database': version}
+    try:
+        data = DataAccess()
+        version = data.get_version()
+        return {'status': 'running', 'database': version}
+    except Exception:
+        return {'status': 'running', 'database': None}
 
 
 if __name__ == '__main__':
