@@ -37,4 +37,4 @@ class RecordsIntegrationTests(unittest.TestCase):
         origin, dest = 'CNDAL', 'NOHAU'
         date_from, date_to = date(2016, 1, 1), date(2016, 1, 31)
         results = self.da.get_results(origin, dest, date_from, date_to)
-        self.assertListEqual([(date(2016, 1, 1), None),(date(2016, 1, 2), None)], results, 'should be null both days')
+        self.assertListEqual([('2016-01-01', None),('2016-01-02', None)], results, 'should be null both days')
