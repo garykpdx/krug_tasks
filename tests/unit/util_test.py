@@ -13,3 +13,10 @@ class UtilTests(unittest.TestCase):
             [('2016-01-01', 800), ('2016-01-01', 700), ('2016-01-01', 700), ('2016-01-01', 1000)])
         self.assertListEqual([('2016-01-01', 800)], result)
         self.assertIsInstance(result[0][1], int)
+
+    def test_get_daily_averages_returns_average_and_null(self):
+        result = get_daily_averages(
+            [('2016-01-01', 800), ('2016-01-01', 700), ('2016-01-01', 700), ('2016-01-01', 1000),
+             ('2016-01-02', 800), ('2016-01-02', 700)])
+        self.assertListEqual([('2016-01-01', 800), ('2016-01-02', None)], result)
+        self.assertIsInstance(result[0][1], int)
