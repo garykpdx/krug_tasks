@@ -5,6 +5,7 @@ from datetime import date, datetime
 from flask import Flask
 from flask import abort
 from flask import request
+from psycopg2 import OperationalError
 
 from data_access import DataAccess
 
@@ -37,7 +38,7 @@ def get_status():
         data = DataAccess()
         version = data.get_version()
         return {'status': 'running', 'database': version}
-    except Exception:
+    except OperationalError:
         return {'status': 'running', 'database': None}
 
 
